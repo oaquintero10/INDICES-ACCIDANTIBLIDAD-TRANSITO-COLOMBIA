@@ -1,0 +1,271 @@
+<!doctype html>
+<html>
+  <div style="background-color:white;">
+	<head>
+		<meta charset="utf-8" />
+		<title>ACCIDENTABILIDAD EN COLOMBIA</title>
+
+	</head>
+	<header>
+				<h1 ALIGN=center><b>ACCIDENTABILIDAD EN COLOMBIA</b></h1>
+	</header>
+</html>
+  <p align="left" style="font-size: 14px">La información presentada consta de los accidentes que sucedieron entre el 1 de enero a 31 de diciembre de 2015
+    </p>
+  <p align="left" style="font-size: 14px">Como era de esperarse los niveles más altos de accidentabilidad son cometidos en los departamentos en los que se encuentran mayor cantidad de vehículos, esto incluye carros, buses, taxis y bicicletas.</p>
+<TABLE>
+	<TR>
+		<TD>
+      <section>
+      <body>
+          <div id="graph">
+              <h1>ACCIDENTES NIVEL NACIONAL</h1>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+              </div>
+          <script type="text/javascript">
+
+          var margin = {top: 30, right: 20, bottom: 40, left: 40},
+          width = 960 - margin.left - margin.right,
+          height = 650 - margin.top - margin.bottom;
+
+          //formatter
+          var formatValue = d3.format("0,000");
+
+          //translating the graph
+          var translate = 110;
+
+          //create the x scale
+          var xScale = d3.scale.linear();
+
+          //create the y scale
+          var yScale = d3.scale.ordinal()
+          .rangeRoundBands([0, height], 0.1);
+
+          //create x axisvar
+          xAxis = d3.svg.axis()
+          .scale(xScale)
+          .orient("bottom");
+
+          //create the container
+          var svg = d3.select("#graph").append("svg")
+          .attr("width", width + translate)
+          .attr("height", height + margin.top);
+
+          //creating x Axis
+          svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(" + translate + "," + height + ")")
+          .call(xAxis);
+
+          //load csv
+          d3.csv("data.csv", function(error, data){
+              if (error) throw error;
+
+              //iterate throught data to convert strings to numbers
+              data.forEach(function(d){
+                  d.value = +d.value;
+              });
+
+              //set xScale domain
+              xScale.range([0, width- translate]).domain(d3.extent(data, function(d){return d.value;}));
+
+              //set yScale domain
+              yScale.domain(d3.range(data.length));
+
+              //select bars
+              var bar = svg.append("g").attr("class", "bars").selectAll(".bar")
+              .data(data);
+
+              //create bar elements
+              bar.enter()
+              .append("rect")
+              .attr("width", 0)
+              .attr("height", yScale.rangeBand())
+              .attr("x", 0)
+              .attr("y", function(d, i){
+                  return yScale(i);
+              })
+              .attr("fill", "rgb(170, 49, 93)")
+              .attr("class", "bar")
+              .append("title")
+              .html(function(d){
+                  return d.country + ": "+d.value;
+              });
+
+              //update values
+              bar.transition().duration(1000)
+              .attr("width", function(d){
+                  return xScale(d.value) ;
+              });
+              d3.selectAll(".bars").attr("transform", "translate(" + translate + ",0)");
+
+              //select text bar values
+              var values = svg.append("g").attr("class", "values").selectAll(".value")
+              .data(data);
+
+              //create text elements
+              values.enter()
+              .append("text")
+              .attr("class", "value")
+              .attr("x", 0)
+              .attr("dy", ".95em")
+              .attr("dx", ".5em")
+              .attr("y", function(d, i){
+                  return yScale(i);
+              })
+              .text(function(d){
+                  return addComas(d.value);
+              });
+
+              //update actual position
+              values
+              .transition()
+              .duration(1000)
+              .attr("x", function(d){
+                  return xScale(d.value) ;
+              });
+
+              d3.selectAll(".values").attr("transform", "translate(" + translate + ",0)");
+
+              //create countries texts
+              var countries = svg.append("g").attr("class", "countries").selectAll(".country")
+              .data(data)
+              .enter()
+              .append("text")
+              .attr("class", "country")
+              .attr("x", 0)
+              .attr("dy", ".75em")
+              .attr("dx", "7em")
+              .attr("y", function(d, i){
+                  return yScale(i);
+              })
+              .attr("text-anchor", "end")
+              .text(function(d){
+                  return d.country;
+              });
+
+              //create the line between countries and bars
+              var line = svg.append("line")
+              .attr("x1", 0)
+              .attr("x2", 0)
+              .attr("y1", 4)
+              .attr("y2", yScale(data.length-1) + yScale.rangeBand())
+              .attr("stroke", "#777")
+              .attr("stroke-width", 1)
+              .attr("transform", "translate(" + translate + ",0)");
+
+              //create x axis animation from zero
+              d3.selectAll(".x.axis").transition().duration(1000).call(xAxis);
+
+              //set visibility of x axis text labels
+              d3.selectAll(".tick text").transition().duration(1000).delay(500).style("opacity", 1);
+          });
+
+          //function to add a coma to values
+          function addComas(n) {
+              return formatValue(n).replace('.', ',').replace('.', ',');
+          }
+
+          </script>
+      </body>
+      </section>
+    </TD>
+    <TD></TD>
+	</TR>
+</TABLE>
+<p align="left" style="font-size: 14px"><b>Bogotá</b></p>
+<p align="left" style="font-size: 13px">Enfocando un poco el análisis hacia la ciudad de Bogotá, aunque es muy disperso que hay dos zonas horarias en las que se presentan mayor índice de accidentabilidad:</p>
+<p align="left" style="font-size: 13px">•	Todos los días entre las 9am y 2pm</p>
+<p align="left" style="font-size: 13px">•	Todos los días entre las 9pm y 11pm</p>
+<head>
+<meta charset="utf-8">
+
+<!-- D3.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+
+<!-- Google Font -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+
+<script src="accidents.js"></script>
+
+<style>
+html { font-size: 62.5%; }
+
+body {
+	font-size: 1rem;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	fill: #8C8C8C;
+	text-align: center;
+}
+
+.timeLabel, .dayLabel {
+	font-size: 1.6rem;
+	fill: #AAAAAA;
+	font-weight: 300;
+}
+
+text.axis-workweek, text.axis-worktime {
+	fill: #404040;
+	font-weight: 400;
+}
+
+.title {
+	font-size: 2.8rem;
+	fill: #4F4F4F;
+	font-weight: 300;
+}
+
+.subtitle {
+	font-size: 1.4rem;
+	fill: #AAAAAA;
+	font-weight: 300;
+}
+
+.credit {
+	font-size: 1.2rem;
+	fill: #AAAAAA;
+	font-weight: 400;
+}
+
+.axis path, .axis tick, .axis line {
+		fill: none;
+		stroke: none;
+}
+
+text {
+		font-size: 1.2rem;
+		fill: #AAAAAA;
+		font-weight: 400;
+}
+
+.legendTitle {
+		font-size: 1.6rem;
+		fill: #4F4F4F;
+		font-weight: 400;
+}
+</style>
+
+</head>
+<body>
+<div id="trafficAccidents"></div>
+<script src="script.js"></script>
+</script>
+</body>
+<p align="left" style="font-size: 13px">
+Se cambio un poco el enfoque de las preguntas originales, en las cuales se planteaba mostrar cual era el genero de la persona que mas
+causaba accidente (hombres) y el medio que mas generaba accidentes (motos y carros) ya que en el caso de la última pregunta es evidente
+que son los que mas hay en una ciudad.
+</p>
+<p align="left" style="font-size: 13px">
+Otro analísis basado en la edad, se muestra que el rango de los 15 a los 25 años son el grupo de personas que más generan accidente. Por otro lado,
+se ve que los mayores de edad manejan con mucho mas cuidado ya que a partir de los 45 se baja los niveles de accidentabilidad.
+<IMG SRC="edad.jpg">
+
+<footer align="center" style="font-size: 11px;">
+      Omar Alfonso Quintero Contreras<br>
+      Código: 200210675<br>
+      Universidad de los Andes<br>
+      Maestría en Ingenieríea de la Información<br>
+      Visual Analytics
+</footer>
