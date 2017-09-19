@@ -6,7 +6,7 @@ var days = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
 	times = d3.range(24);
 
 var margin = {
-	top: 170,
+	top: 50,
 	right: 50,
 	bottom: 70,
 	left: 50
@@ -17,7 +17,7 @@ var width = Math.max(Math.min(window.innerWidth, 1000), 500) - margin.left - mar
 	height = gridSize * (days.length+4);
 
 //SVG container
-var svg = d3.select('#trafficAccidents')
+var svg2 = d3.select('#trafficAccidents')
 	.append("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom)
@@ -37,7 +37,7 @@ var colorScale = d3.scale.linear()
 	.range(["#FFFFDD", "#3E9583", "#1F2D86"])
 	//.interpolate(d3.interpolateHcl);
 
-var dayLabels = svg.selectAll(".dayLabel")
+var dayLabels = svg2.selectAll(".dayLabel")
     .data(days)
     .enter().append("text")
     .text(function (d) { return d; })
@@ -47,7 +47,7 @@ var dayLabels = svg.selectAll(".dayLabel")
     .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
     .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "dayLabel mono axis axis-workweek" : "dayLabel mono axis"); });
 
-var timeLabels = svg.selectAll(".timeLabel")
+var timeLabels = svg2.selectAll(".timeLabel")
     .data(times)
     .enter().append("text")
     .text(function(d) { return d; })
@@ -57,7 +57,7 @@ var timeLabels = svg.selectAll(".timeLabel")
     .attr("transform", "translate(" + gridSize / 2 + ", -6)")
     .attr("class", function(d, i) { return ((i >= 8 && i <= 17) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
-var heatMap = svg.selectAll(".hour")
+var heatMap = svg2.selectAll(".hour")
     .data(accidents)
     .enter().append("rect")
     .attr("x", function(d) { return (d.hour - 1) * gridSize; })
@@ -70,13 +70,6 @@ var heatMap = svg.selectAll(".hour")
     .style("fill", function(d) { return colorScale(d.count); });
 
 //Append title to the top
-svg.append("text")
-	.attr("class", "title")
-    .attr("x", width/2)
-    .attr("y", -90)
-    .style("text-anchor", "middle")
-    .text("ACCIDENTES POR DIA Y HORA");
-
 ///////////////////////////////////////////////////////////////////////////
 //////////////// Create the gradient for the legend ///////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -96,7 +89,7 @@ for(var i = 0; i < numStops; i++) {
 }//for i
 
 //Create the gradient
-svg.append("defs")
+svg2.append("defs")
 	.append("linearGradient")
 	.attr("id", "trafico")
 	.attr("x1", "0%").attr("y1", "0%")
@@ -117,7 +110,7 @@ svg.append("defs")
 
 var legendWidth = Math.min(width*0.8, 400);
 //Color Legend container
-var legendsvg = svg.append("g")
+var legendsvg = svg2.append("g")
 	.attr("class", "legendWrapper")
 	.attr("transform", "translate(" + (width/2) + "," + (gridSize * days.length + 40) + ")");
 
