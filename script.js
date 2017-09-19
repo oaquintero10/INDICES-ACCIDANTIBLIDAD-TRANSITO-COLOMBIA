@@ -6,7 +6,7 @@ var days = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
 	times = d3.range(24);
 
 var margin = {
-	top: 50,
+	top: 30,
 	right: 50,
 	bottom: 70,
 	left: 50
