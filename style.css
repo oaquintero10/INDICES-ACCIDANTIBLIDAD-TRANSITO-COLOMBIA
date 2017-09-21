@@ -1,0 +1,83 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    fill: #8C8C8C;
+    text-align: center;
+}
+/* 
+    Jofre-Manchola: Dado que a todos los parrafos aplicas el mismo estilo, se agrega en esta hoja de 
+    estilos y se retira el estilo in-line del documento html
+*/
+p{
+    font-size: 14px;
+    text-align: left;
+}
+/* 
+    Jofre-Manchola: Se forza el tamaño de la imágen al 100% del ancho de la página para evitar el 
+    desbordamiento que se presentaba
+*/
+img{
+    width: 100%;
+}
+/* 
+    Jofre-Manchola: Se agrega un estilo a las listas no ordenadas para mantener 
+    el diseño propuesto por @oaquintero10
+*/
+ul{
+    font-size: 14px;
+    text-align: left;
+}
+.timeLabel,
+.dayLabel {
+    font-size: 1.6rem;
+    fill: #AAAAAA;
+    font-weight: 300;
+}
+
+text.axis-workweek,
+text.axis-worktime {
+    fill: #404040;
+    font-weight: 400;
+}
+
+.title {
+    font-size: 2.8rem;
+    fill: #4F4F4F;
+    font-weight: 300;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    fill: #AAAAAA;
+    font-weight: 300;
+}
+
+.credit {
+    font-size: 1.2rem;
+    fill: #AAAAAA;
+    font-weight: 400;
+}
+
+.axis path,
+.axis tick,
+.axis line {
+    fill: none;
+    stroke: none;
+}
+
+text {
+    font-size: 1.2rem;
+    fill: #AAAAAA;
+    font-weight: 400;
+}
+
+.legendTitle {
+    font-size: 1.6rem;
+    fill: #4F4F4F;
+    font-weight: 400;
+}
