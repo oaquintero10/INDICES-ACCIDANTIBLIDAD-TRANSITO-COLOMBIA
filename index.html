@@ -113,6 +113,22 @@
                         d.value = +d.value;
                     });
 
+                    /**
+                     * Jofre-Manchola: Como sugerencia, dado que tu insight se relaciona con los
+                     * departamentos con mayor cantidad de accidentes, recomiendo presentar los datos
+                     * ordenados por este criterio, lo que permitirá identificar fácilmente los departamentos
+                     * con mayor y mejor accidentabilidad.
+                     * 
+                     * Adicionalemnte tengo la duda sobre la afirmación "Como era de esperarse los niveles 
+                     * más altos de accidentabilidad son cometidos en los departamentos en los que se encuentran 
+                     * mayor cantidad de vehículos, esto incluye carros, buses, taxis y bicicletas." porque no veo
+                     * el lugar donde estás identificando los departamentos con mayor cantidad de vehículos, 
+                     * por lo que vi el dataset solamente habla de la cantidad de incidentes.
+                     */
+                    data.sort(function (a, b) {
+                        return d3.descending(a.value, b.value);
+                    });
+
                     //set xScale domain
                     xScale.range([0, width - translate]).domain(d3.extent(data, function (d) { return d.value; }));
 
